@@ -20,11 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $attempt = (array)$_POST['attempt'];
 
-    // cache bug !
     if (!empty(file_get_contents('./cache.txt'))) {
         $dotPosition = new DotPositionClass();
         $attemptInfo = new AttemptInfoClass();
 
+        //! hotspot not saved
         $attemptInfo->buildFromJson(json_decode(file_get_contents('./cache.txt')));
         $dotPosition->buildFromJson(json_decode(file_get_contents('./cache.txt'))->dotPosition);
 
@@ -37,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $dotPosition->isDotPosition($attemptPosition);
 
         file_put_contents('./cache.txt', json_encode($attemptInfo, true));
-        if ($result = DotPositionClass::IS_DOT) {
+        file_put_contents('./cache2.txt', json_encode($attemptInfo->hasFoundHotSpot, true));
+        if ($result === DotPositionClass::IS_DOT) {
             file_put_contents('./cache.txt', '');
         }
 
