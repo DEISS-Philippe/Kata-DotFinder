@@ -1,0 +1,1 @@
+{"hasFoundHotSpot":false,"hotSpotX":null,"hotSpotY":null,"feedback":2,"dotPosition":{"gridMaxSize":[100,100],"dotPosition":[38,20],"hotSpotSize":[10,10]},"currentAttempt":[97,46],"formerAttempt":["65","83"]}

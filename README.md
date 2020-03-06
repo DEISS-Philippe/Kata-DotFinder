@@ -14,3 +14,7 @@ php src/dotFinder.php
 Testing :
 
 .\vendor\bin\phpunit .\test\DotFinderTest
+
+Hosting :
+
+php -S localhost:8000

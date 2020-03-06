@@ -110,4 +110,11 @@ class DotPositionClass {
     {
         $this->hotSpotSize = $hotSpotSize;
     }
+
+    public function buildFromJson($arrayFromJson): void
+    {
+        $this->gridMaxSize = $arrayFromJson->gridMaxSize;
+        $this->dotPosition = $arrayFromJson->dotPosition;
+        $this->hotSpotSize = $arrayFromJson->hotSpotSize;
+    }
 }

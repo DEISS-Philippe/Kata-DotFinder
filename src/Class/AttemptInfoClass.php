@@ -128,4 +128,15 @@ class AttemptInfoClass {
         $this->currentAttempt = $currentAttempt;
     }
 
+    public function buildFromJson($arrayFromJson)
+    {
+        $this->hasFoundHotSpot = $arrayFromJson->hasFoundHotSpot;
+        $this->hotSpotX = $arrayFromJson->hotSpotX;
+        $this->hotSpotY = $arrayFromJson->hotSpotY;
+        $this->feedback = $arrayFromJson->feedback;
+
+        $this->currentAttempt = $arrayFromJson->currentAttempt;
+        $this->formerAttempt = $arrayFromJson->formerAttempt;
+    }
+
 }
