@@ -6,9 +6,13 @@ use App\AttemptInfoClass;
 use App\DotFinderController;
 use App\DotPositionClass;
 
+$gridSize = [100, 100];
+$hotSpotSize = [10, 10];
+
 $dotPosition = new DotPositionClass();
-$dotPosition->setDotPosition([38, 20]);
-$dotPosition->setHotSpotSize([10, 10]);
+$dotPosition->setDotPosition([50, 50]);
+$dotPosition->setGridMaxSize($gridSize);
+$dotPosition->setHotSpotSize($hotSpotSize);
 
 $dotController = new DotFinderController();
 $attemptInfo = new AttemptInfoClass();
@@ -21,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $attempt = (array)$_POST['attempt'];
 
     if (!empty(file_get_contents('./cache.txt'))) {
+        $result = $_POST['attempt'];
         $dotPosition = new DotPositionClass();
         $attemptInfo = new AttemptInfoClass();
 
@@ -31,13 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $attemptInfo->setDotPosition($dotPosition);
     }
 
-    if ($_POST['type'] = 'attempt' && isset($_POST['attempt']) && !empty($_POST['attempt']) && is_array($attempt) && count($attempt) == 2) {
+    if ($_POST['type'] = 'attempt' && isset($_POST['attempt']) && !empty($result) && is_array($attempt) && count($attempt) == 2) {
         $attemptInfo->setCurrentAttempt($attempt);
-        $attemptPosition = $dotController->presentAttempt($dotPosition, $result, $attemptInfo);
+        $attemptPosition = $dotController->presentAttempt($dotPosition, $_POST['feedback'], $attemptInfo);
         $result = $dotPosition->isDotPosition($attemptPosition);
 
         file_put_contents('./cache.txt', json_encode($attemptInfo, true));
-        file_put_contents('./cache2.txt', json_encode($attemptInfo->hasFoundHotSpot, true));
         if ($result === DotPositionClass::IS_DOT) {
             file_put_contents('./cache.txt', '');
         }
@@ -60,7 +64,7 @@ else {
     <head>
         <title>DotFinder</title>
         <style>
-            * {
+            table {
                 line-height: 4px;
                 font-size: large;
             }
@@ -88,12 +92,18 @@ else {
             }
             ?>
         </table>
-        <button id="start" style="margin-top: 20px">GO</button>
+        <button id="start" style="margin-top: 20px">Try</button>
         <script
             src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous"></script>
         <script type="application/javascript" src="./js/queryDotPosition.js"></script>
+        <table style="margin-top: 20px">
+            <tr>
+                <td>Grid Size : <?php echo $gridSize[0].'x'.$gridSize[1] ?></td>
+                <td>HotSpotSize : <?php echo $hotSpotSize[0].'x'.$hotSpotSize[1] ?></td>
+            </tr>
+        </table>
     </body>
     </html>
     <?php

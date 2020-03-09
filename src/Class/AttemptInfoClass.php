@@ -5,10 +5,12 @@ declare(strict_types = 1);
 namespace App;
 
 class AttemptInfoClass {
+    /** @var bool $hasFoundHotSpot */
     public $hasFoundHotSpot = false;
     public $hotSpotX;
     public $hotSpotY;
 
+    /** @var int|null $feedback */
     public $feedback = null;
     /** @var DotPositionClass|null */
     public $dotPosition = null;
@@ -81,17 +83,17 @@ class AttemptInfoClass {
     }
 
     /**
-     * @return null
+     * @return int|null
      */
-    public function getFeedback()
+    public function getFeedback(): int
     {
         return $this->feedback;
     }
 
     /**
-     * @param null $feedback
+     * @param int|null $feedback
      */
-    public function setFeedback($feedback): void
+    public function setFeedback(int $feedback): void
     {
         $this->feedback = $feedback;
     }
