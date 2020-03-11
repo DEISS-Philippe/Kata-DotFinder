@@ -80,6 +80,22 @@ class DotPositionClass {
     }
 
     /**
+     * @return int
+     */
+    public function getGridMaxSizeX(): int
+    {
+        return $this->gridMaxSize[0];
+    }
+
+    /**
+     * @return int
+     */
+    public function getGridMaxSizeY(): int
+    {
+        return $this->gridMaxSize[1];
+    }
+
+    /**
      * @return array
      */
     public function getDotPosition(): array
@@ -101,6 +117,22 @@ class DotPositionClass {
     public function getHotSpotSize(): array
     {
         return $this->hotSpotSize;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHotSpotX(): int
+    {
+        return $this->hotSpotSize[0];
+    }
+
+    /**
+     * @return int
+     */
+    public function getHotSpotY(): int
+    {
+        return $this->hotSpotSize[1];
     }
 
     /**

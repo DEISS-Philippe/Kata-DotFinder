@@ -32,9 +32,6 @@ Class ResponseManager {
             $this->result = $_POST['attempt'];
 
             $this->attemptInfo->buildFromJson(json_decode(file_get_contents('./cache.txt')));
-            $this->dotPosition->buildFromJson(json_decode(file_get_contents('./cache.txt'))->dotPosition);
-
-            $this->attemptInfo->setDotPosition($this->dotPosition);
         }
 
         if ($this->attemptInfo->getFeedback() !== DotPositionClass::IS_DOT) {
@@ -78,7 +75,7 @@ Class ResponseManager {
                     background-color: greenyellow;
                 }
                 .try {
-                    background-color: bisque;
+                    background-color: blue;
                 }
             </style>
         </head>

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Event;
 
 use App\AttemptInfoClass;
+use App\DotPositionClass;
 use App\Event\EventMethodInterface;
 
 class findDot implements EventMethodInterface {
@@ -11,11 +12,13 @@ class findDot implements EventMethodInterface {
     {
         /** @var AttemptInfoClass $attemptInfo */
         $attemptInfo = $args[0];
+        /** @var DotPositionClass $dotPosition */
+        $dotPosition = $args[1];
 
         if (!empty($attemptInfo->getHotSpotX()) && !empty($attemptInfo->getHotSpotY())) {
 
-            $x = $attemptInfo->getHotSpotX() - $attemptInfo->getDotPosition()->hotSpotSize[0];
-            $y = $attemptInfo->getHotSpotY() - $attemptInfo->getDotPosition()->hotSpotSize[1];
+            $x = $attemptInfo->getHotSpotX() - $dotPosition->getHotSpotX();
+            $y = $attemptInfo->getHotSpotY() - $dotPosition->getHotSpotY();
 
             $attemptInfo->setCurrentAttempt([$x, $y]);
         }

@@ -18,12 +18,10 @@ class DotFinderController {
     /**
      * @param $attemptInfo AttemptInfoClass
      * @param $feedback
-     * @param $dotPosition
      */
-    public function updateAttemptInfo($attemptInfo, $feedback, $dotPosition): void
+    public function updateAttemptInfo($attemptInfo, $feedback): void
     {
         $attemptInfo->setFeedback($feedback);
-        $attemptInfo->setDotPosition($dotPosition);
 
         $attemptInfo->setFormerAttempt($attemptInfo->getCurrentAttempt());
         $attemptInfo->setCurrentAttempt([0, 0]);
@@ -31,17 +29,17 @@ class DotFinderController {
 
     public function presentAttempt(DotPositionClass $dotPosition, int $feedback, AttemptInfoClass $attemptInfo): array
     {
-        $this->updateAttemptInfo($attemptInfo, $feedback, $dotPosition);
+        $this->updateAttemptInfo($attemptInfo, $feedback);
 
         // --- Events
         $reactToFeedBackEvent = new Event();
-        $reactToFeedBackEvent->buildEvent('reactToFeedBack', [$attemptInfo]);
+        $reactToFeedBackEvent->buildEvent('reactToFeedBack', [$attemptInfo, $dotPosition]);
 
         // - react to feedback
         $this->eventDispatcher->dispatch($reactToFeedBackEvent);
 
         $thinkAttemptEvent = new Event();
-        $thinkAttemptEvent->buildEvent('thinkAttempt', [$attemptInfo]);
+        $thinkAttemptEvent->buildEvent('thinkAttempt', [$attemptInfo, $dotPosition]);
 
         // - think about attempt
         $this->eventDispatcher->dispatch($thinkAttemptEvent);
@@ -56,8 +54,8 @@ class DotFinderController {
 
     function createRandomAttempt(DotPositionClass $dotPosition): array
     {
-        $attemptPositionX = rand(0, $dotPosition->gridMaxSize[0]);
-        $attemptPositionY = rand(0, $dotPosition->gridMaxSize[1]);
+        $attemptPositionX = rand(0, $dotPosition->getGridMaxSizeX());
+        $attemptPositionY = rand(0, $dotPosition->getGridMaxSizeY());
 
         return $attemptPosition = [$attemptPositionX , $attemptPositionY];
     }

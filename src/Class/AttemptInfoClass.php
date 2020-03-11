@@ -12,8 +12,6 @@ class AttemptInfoClass {
 
     /** @var int|null $feedback */
     public $feedback = null;
-    /** @var DotPositionClass|null */
-    public $dotPosition = null;
 
     public $currentAttempt = [0, 0];
     public $formerAttempt = [0, 0];
@@ -37,7 +35,7 @@ class AttemptInfoClass {
     /**
      * @return bool
      */
-    public function isHasFoundHotSpot(): bool
+    public function hasFoundHotSpot(): bool
     {
         return $this->hasFoundHotSpot;
     }
@@ -96,22 +94,6 @@ class AttemptInfoClass {
     public function setFeedback(int $feedback): void
     {
         $this->feedback = $feedback;
-    }
-
-    /**
-     * @return DotPositionClass|null
-     */
-    public function getDotPosition(): ?DotPositionClass
-    {
-        return $this->dotPosition;
-    }
-
-    /**
-     * @param DotPositionClass|null $dotPosition
-     */
-    public function setDotPosition(?DotPositionClass $dotPosition): void
-    {
-        $this->dotPosition = $dotPosition;
     }
 
     /**
