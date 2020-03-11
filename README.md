@@ -9,9 +9,11 @@ Install :
 composer update
 composer dumpautoload -o
 
+Execute :
+
 php src/dotFinder.php
 
-Testing :
+Testing (starting in floder path) :
 
 .\vendor\bin\phpunit .\test\DotFinderTest
 

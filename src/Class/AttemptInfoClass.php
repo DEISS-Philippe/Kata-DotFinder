@@ -85,7 +85,7 @@ class AttemptInfoClass {
     /**
      * @return int|null
      */
-    public function getFeedback(): int
+    public function getFeedback(): ?int
     {
         return $this->feedback;
     }

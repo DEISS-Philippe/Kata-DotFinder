@@ -29,31 +29,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dotPosition = new DotPositionClass();
         $attemptInfo = new AttemptInfoClass();
 
-        //! hotspot not saved
         $attemptInfo->buildFromJson(json_decode(file_get_contents('./cache.txt')));
         $dotPosition->buildFromJson(json_decode(file_get_contents('./cache.txt'))->dotPosition);
 
         $attemptInfo->setDotPosition($dotPosition);
     }
 
-    if ($_POST['type'] = 'attempt' && isset($_POST['attempt']) && !empty($result) && is_array($attempt) && count($attempt) == 2) {
-        $attemptInfo->setCurrentAttempt($attempt);
-        $attemptPosition = $dotController->presentAttempt($dotPosition, $_POST['feedback'], $attemptInfo);
-        $result = $dotPosition->isDotPosition($attemptPosition);
+    if ($attemptInfo->getFeedback() !== DotPositionClass::IS_DOT) {
 
-        file_put_contents('./cache.txt', json_encode($attemptInfo, true));
-        if ($result === DotPositionClass::IS_DOT) {
-            file_put_contents('./cache.txt', '');
+        if ($_POST['type'] == 'attempt' && isset($_POST['attempt']) && !empty($result) && is_array($attempt) && count($attempt) == 2) {
+            $attemptInfo->setCurrentAttempt($attempt);
+            $attemptPosition = $dotController->presentAttempt($dotPosition, $_POST['feedback'], $attemptInfo);
+            $result = $dotPosition->isDotPosition($attemptPosition);
+
+            file_put_contents('./cache.txt', json_encode($attemptInfo, true));
+            if ($result === DotPositionClass::IS_DOT) {
+                file_put_contents('./cache.txt', '');
+            }
+
+            header('Content-Type: application/javascript; charset=utf-8');
+            echo json_encode([$attemptPosition, $result]);
         }
-
-        header('Content-Type: application/javascript; charset=utf-8');
-        echo json_encode([$attemptPosition, $result]);
+        else {
+            header('Status: 400 Bad Request');
+            echo 'error';
+        }
     }
     else {
-        header('Status: 400 Bad Request');
-        echo 'error';
+        echo 'Dot found';
     }
-
 }
 
 else {
@@ -102,6 +106,7 @@ else {
             <tr>
                 <td>Grid Size : <?php echo $gridSize[0].'x'.$gridSize[1] ?></td>
                 <td>HotSpotSize : <?php echo $hotSpotSize[0].'x'.$hotSpotSize[1] ?></td>
+                <td>! clear the cache if interrupted !</td>
             </tr>
         </table>
     </body>
