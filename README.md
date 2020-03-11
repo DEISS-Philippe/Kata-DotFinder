@@ -17,6 +17,6 @@ Testing (starting in floder path) :
 
 .\vendor\bin\phpunit .\test\DotFinderTest
 
-Hosting :
+Hosting (path with index.php):
 
 php -S localhost:8000

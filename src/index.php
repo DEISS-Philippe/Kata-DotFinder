@@ -68,7 +68,7 @@ else {
     <head>
         <title>DotFinder</title>
         <style>
-            table {
+            .dotgrid {
                 line-height: 4px;
                 font-size: large;
             }
@@ -84,31 +84,37 @@ else {
         </style>
     </head>
     <body>
-        <table>
-            <?php
-            for ($i=0; $i < $dotPosition->getGridMaxSize()[0]; $i++) {
-                echo "<tr>";
+    <table class="dotgrid">
+        <?php
+        for ($i=0; $i < $dotPosition->getGridMaxSize()[0]; $i++) {
+            echo "<tr>";
 
-                for ($y=0; $y < $dotPosition->getGridMaxSize()[1]; $y++) {
-                    echo "<td data-position=".$i.":".$y.">.</td>";
-                }
-                echo "</tr>";
+            for ($y=0; $y < $dotPosition->getGridMaxSize()[1]; $y++) {
+                echo "<td data-position=".$i.":".$y.">.</td>";
             }
-            ?>
-        </table>
-        <button id="start" style="margin-top: 20px">Try</button>
-        <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
-        <script type="application/javascript" src="./js/queryDotPosition.js"></script>
-        <table style="margin-top: 20px">
-            <tr>
-                <td>Grid Size : <?php echo $gridSize[0].'x'.$gridSize[1] ?></td>
-                <td>HotSpotSize : <?php echo $hotSpotSize[0].'x'.$hotSpotSize[1] ?></td>
-                <td>! clear the cache if interrupted !</td>
-            </tr>
-        </table>
+            echo "</tr>";
+        }
+        ?>
+    </table>
+    <button id="start" style="margin-top: 20px">Try</button>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <script type="application/javascript" src="./js/queryDotPosition.js"></script>
+    <table style="margin-top: 20px">
+        <tr>
+            <td>Attempts : <span class="attempts">0</span></td>
+        </tr>
+
+        <tr>
+            <td>Grid Size : <?php echo $gridSize[0].'x'.$gridSize[1] ?></td>
+            <td>HotSpotSize : <?php echo $hotSpotSize[0].'x'.$hotSpotSize[1] ?></td>
+        </tr>
+        <tr>
+            <td>! clear the cache if interrupted !</td>
+        </tr>
+    </table>
     </body>
     </html>
     <?php
