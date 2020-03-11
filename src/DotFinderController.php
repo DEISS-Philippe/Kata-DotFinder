@@ -24,7 +24,9 @@ class DotFinderController {
         $attemptInfo->setFeedback($feedback);
 
         $attemptInfo->setFormerAttempt($attemptInfo->getCurrentAttempt());
-        $attemptInfo->setCurrentAttempt([0, 0]);
+        $attemptInfo->addToBlackList($attemptInfo->getFormerAttempt());
+
+        $attemptInfo->resetCurrentAttempt();
     }
 
     public function presentAttempt(DotPositionClass $dotPosition, int $feedback, AttemptInfoClass $attemptInfo): array
@@ -46,17 +48,22 @@ class DotFinderController {
 
         // --- if No Idea, attempt random
         if ($attemptInfo->getCurrentAttempt() === [0, 0] || $attemptInfo->getCurrentAttempt() === $attemptInfo->getformerAttempt()) {
-            $attemptInfo->setCurrentAttempt($this->createRandomAttempt($dotPosition));
+            $attemptInfo->setCurrentAttempt($this->createRandomAttempt($dotPosition, $attemptInfo));
         }
 
         return $attemptInfo->getCurrentAttempt();
     }
 
-    function createRandomAttempt(DotPositionClass $dotPosition): array
+    function createRandomAttempt(DotPositionClass $dotPosition, AttemptInfoClass $attemptInfo): array
     {
-        $attemptPositionX = rand(0, $dotPosition->getGridMaxSizeX());
-        $attemptPositionY = rand(0, $dotPosition->getGridMaxSizeY());
+        do {
+            $attemptPositionX = rand(0, $dotPosition->getGridMaxSizeX());
+            $attemptPositionY = rand(0, $dotPosition->getGridMaxSizeY());
 
-        return $attemptPosition = [$attemptPositionX , $attemptPositionY];
+            $attemptPosition = [$attemptPositionX , $attemptPositionY];
+        }
+        while($attemptInfo->isInBlackList($attemptPosition));
+
+        return $attemptPosition;
     }
 }

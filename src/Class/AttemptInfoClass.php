@@ -9,6 +9,8 @@ class AttemptInfoClass {
     public $hasFoundHotSpot = false;
     public $hotSpotX;
     public $hotSpotY;
+    /** @var array */
+    public $blackList = [];
 
     /** @var int|null $feedback */
     public $feedback = null;
@@ -30,6 +32,21 @@ class AttemptInfoClass {
     public function setFormerAttempt(array $formerAttempt): void
     {
         $this->formerAttempt = $formerAttempt;
+    }
+
+    public function addToBlackList(array $attempt): void
+    {
+        $this->blackList[] = $attempt;
+    }
+
+    public function isInBlackList(array $attempt): bool
+    {
+        foreach ($this->blackList as $blaclListElement) {
+            if ($blaclListElement === $attempt) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -110,6 +127,11 @@ class AttemptInfoClass {
     public function setCurrentAttempt(array $currentAttempt): void
     {
         $this->currentAttempt = $currentAttempt;
+    }
+
+    public function resetCurrentAttempt(): void
+    {
+        $this->currentAttempt = [0, 0];
     }
 
     public function buildFromJson($arrayFromJson)
