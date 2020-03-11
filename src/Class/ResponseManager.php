@@ -29,7 +29,7 @@ Class ResponseManager {
     public function respondToAttempt(array $attempt): string
     {
         if (!empty(file_get_contents('./cache.txt'))) {
-            $result = $_POST['attempt'];
+            $this->result = $_POST['attempt'];
 
             $this->attemptInfo->buildFromJson(json_decode(file_get_contents('./cache.txt')));
             $this->dotPosition->buildFromJson(json_decode(file_get_contents('./cache.txt'))->dotPosition);
