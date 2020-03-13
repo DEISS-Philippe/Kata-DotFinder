@@ -16,7 +16,7 @@ class EventDispatcher
                 'App\Event\checkIfHotSpotFound',
             ],
             'thinkAttempt' => [
-                'App\Event\reactToHotSpot',
+                'App\Event\diagonalReactToHotSpot',
                 'App\Event\findDot'
             ],
         ];

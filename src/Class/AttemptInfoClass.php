@@ -14,6 +14,8 @@ class AttemptInfoClass {
 
     /** @var int|null $feedback */
     public $feedback = null;
+    /** @var array $clues */
+    public $clues = [];
 
     public $currentAttempt = [0, 0];
     public $formerAttempt = [0, 0];
@@ -68,7 +70,7 @@ class AttemptInfoClass {
     /**
      * @return mixed
      */
-    public function getHotSpotX()
+    public function getHotSpotX(): ?int
     {
         return $this->hotSpotX;
     }
@@ -76,7 +78,7 @@ class AttemptInfoClass {
     /**
      * @param mixed $hotSpotX
      */
-    public function setHotSpotX($hotSpotX): void
+    public function setHotSpotX(int $hotSpotX): void
     {
         $this->hotSpotX = $hotSpotX;
     }
@@ -84,7 +86,7 @@ class AttemptInfoClass {
     /**
      * @return mixed
      */
-    public function getHotSpotY()
+    public function getHotSpotY(): ?int
     {
         return $this->hotSpotY;
     }
@@ -92,7 +94,7 @@ class AttemptInfoClass {
     /**
      * @param mixed $hotSpotY
      */
-    public function setHotSpotY($hotSpotY): void
+    public function setHotSpotY(int $hotSpotY): void
     {
         $this->hotSpotY = $hotSpotY;
     }
@@ -134,15 +136,71 @@ class AttemptInfoClass {
         $this->currentAttempt = [0, 0];
     }
 
-    public function buildFromJson($arrayFromJson)
+    public function buildFromJson(array $arrayFromJson)
     {
-        $this->hasFoundHotSpot = $arrayFromJson->hasFoundHotSpot;
-        $this->hotSpotX = $arrayFromJson->hotSpotX;
-        $this->hotSpotY = $arrayFromJson->hotSpotY;
-        $this->feedback = $arrayFromJson->feedback;
+        $this->hasFoundHotSpot = $arrayFromJson['hasFoundHotSpot'];
+        $this->hotSpotX = $arrayFromJson['hotSpotX'];
+        $this->hotSpotY = $arrayFromJson['hotSpotY'];
+        $this->feedback = $arrayFromJson['feedback'];
+        $this->clues = $arrayFromJson['clues'];
 
-        $this->currentAttempt = $arrayFromJson->currentAttempt;
-        $this->formerAttempt = $arrayFromJson->formerAttempt;
+        $this->currentAttempt = $arrayFromJson['currentAttempt'];
+        $this->formerAttempt = $arrayFromJson['formerAttempt'];
+    }
+
+    /**
+     * @return array
+     */
+    public function getBlackList(): array
+    {
+        return $this->blackList;
+    }
+
+    /**
+     * @param array $blackList
+     */
+    public function setBlackList(array $blackList): void
+    {
+        $this->blackList = $blackList;
+    }
+
+    /**
+     * @return array
+     */
+    public function getClues(): array
+    {
+        return $this->clues;
+    }
+
+    /**
+     * @param array $clues
+     */
+    public function setClues(array $clues): void
+    {
+        $this->clues = $clues;
+    }
+
+    public function removeClue(string $clue): void
+    {
+        if (isset($this->clues[$clue])) {
+            unset($this->clues[$clue]);
+        }
+    }
+
+    /**
+     * @param string $clue
+     */
+    public function addClue(string $clue): void
+    {
+        $this->clues[$clue] = '';
+    }
+
+    public function hasClue(string $clue): bool
+    {
+        if (isset($this->getClues()[$clue])) {
+            return true;
+        }
+        return false;
     }
 
 }

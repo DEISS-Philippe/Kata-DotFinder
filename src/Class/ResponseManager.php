@@ -31,7 +31,7 @@ Class ResponseManager {
         if (!empty(file_get_contents('./cache.txt'))) {
             $this->result = $_POST['attempt'];
 
-            $this->attemptInfo->buildFromJson(json_decode(file_get_contents('./cache.txt')));
+            $this->attemptInfo->buildFromJson(json_decode(file_get_contents('./cache.txt'), true));
         }
 
         if ($this->attemptInfo->getFeedback() !== DotPositionClass::IS_DOT) {
@@ -57,7 +57,7 @@ Class ResponseManager {
         return 'Dot found';
     }
 
-    function displayUserInterface(): void {
+    function displayUserInterface($maxThreshold): void {
         ?>
         <!DOCTYPE html>
         <html>
@@ -82,11 +82,11 @@ Class ResponseManager {
         <body>
         <table class="dotgrid">
             <?php
-            for ($i=0; $i < $this->dotPosition->getGridMaxSize()[0]; $i++) {
+            for ($i=$this->dotPosition->getGridMaxSize()[0]; $i > 0; $i--) {
                 echo "<tr>";
 
-                for ($y=0; $y < $this->dotPosition->getGridMaxSize()[1]; $y++) {
-                    echo "<td data-position=".$i.":".$y.">.</td>";
+                for ($j=0; $j < $this->dotPosition->getGridMaxSize()[1]; $j++) {
+                    echo "<td data-position=".$j.":".$i.">.</td>";
                 }
                 echo "</tr>";
             }
@@ -111,6 +111,7 @@ Class ResponseManager {
                 <td>! clear the cache if interrupted !</td>
             </tr>
         </table>
+        <div class="hidden" data-threshold="<?php echo $maxThreshold ?>"></div>
         </body>
         </html>
         <?php

@@ -14,13 +14,15 @@ $responseManager->setGridSize($gridSize);
 $responseManager->setHotSpotSize($hotSpotSize);
 
 $dotPosition = new DotPositionClass();
-$dotPosition->setDotPosition([50, 50]);
+$dotPosition->setDotPosition([31, 56]);
 $dotPosition->setGridMaxSize($gridSize);
 $dotPosition->setHotSpotSize($hotSpotSize);
 
 $responseManager->setDotPosition($dotPosition);
 $responseManager->setResult(DotPositionClass::IS_NOT_DOT);
 $responseManager->setAttemptsNumber(0);
+
+$maxThreshold = 100;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['attempt']) && !empty($_POST['attempt'])) {
@@ -29,5 +31,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo 'Invalid data';
     }
 } else {
-    $responseManager->displayUserInterface();
+    $responseManager->displayUserInterface($maxThreshold);
 }

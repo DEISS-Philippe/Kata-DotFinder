@@ -5,7 +5,7 @@ $( document ).ready(function() {
     let feedback = 2;
     let loop = 1;
 
-    let loopThreshold = 150;
+    let loopThreshold = $('*[data-threshold]').data('threshold');
 
     $('#start').on('click', function(event) {
         console.log(loop);
@@ -55,7 +55,7 @@ $( document ).ready(function() {
                 }, 100 * loop);
             })(loop++);
 
-            if (loop >= loopThreshold) {
+            if (loop > loopThreshold) {
                 console.log('threshold set to '+loopThreshold);
                 break;
             }
